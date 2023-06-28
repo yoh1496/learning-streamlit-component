@@ -104,3 +104,21 @@ if not _RELEASE:
     name_input = st.text_input("Enter a name", value="Streamlit")
     num_clicks = my_component(name_input, key="foo")
     st.markdown("You've clicked %s times!" % int(num_clicks))
+
+    if 'mounted' not in st.session_state:
+        st.session_state.mounted = False
+
+    def on_click_unmount():
+        st.session_state.mounted = False
+        del st.session_state.hoge
+    
+    def on_click_mount():
+        st.session_state.mounted = True
+    
+    mounted = st.session_state.mounted
+
+    st.button('Unmount Component', disabled=not mounted, on_click=on_click_unmount)
+    st.button('Mount Component', disabled=mounted, on_click=on_click_mount)
+
+    if mounted:
+        my_component('Mount/Unmount Test', key="mount_unmount_test")

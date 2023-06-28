@@ -17,6 +17,20 @@ interface State {
 class MyComponent extends StreamlitComponentBase<State> {
   public state = { numClicks: 0, isFocused: false }
 
+  public componentDidMount(): void {
+    super.componentDidMount()
+    console.log('mount');
+  }
+
+  public componentWillUnmount(): void {
+    if (super.componentWillUnmount) super.componentWillUnmount();
+    console.log('unmount');
+  }
+
+  public componentDidUpdate(): void {
+    console.log(this.props)
+  }
+
   public render = (): ReactNode => {
     // Arguments that are passed to the plugin in Python are accessible
     // via `this.props.args`. Here, we access the "name" arg.
