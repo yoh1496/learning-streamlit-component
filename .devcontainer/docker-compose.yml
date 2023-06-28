@@ -1,0 +1,43 @@
+version: '3'
+services:
+  streamlit:
+    build:
+      context: pythondev
+      dockerfile: Dockerfile
+      args:
+        - USER_UID=1234
+        - USER_GID=1234
+        - USERNAME=vscode
+    image: streamlit-component-dev
+
+    # override ports
+    ports:
+      - 8501
+
+    volumes:
+      # Update this to wherever you want VS Code to mount the folder of your project
+      - ..:/workspace:cached
+
+      # Uncomment the next line to use Docker from inside the container. See https://aka.ms/vscode-remote/samples/docker-from-docker-compose for details.
+      # - /var/run/docker.sock:/var/run/docker.sock 
+
+      # bashhistory
+      - bashhistory:/commandhistory
+
+    # environment:
+    #   - 
+
+    # Uncomment the next four lines if you will use a ptrace-based debugger like C++, Go, and Rust.
+    # cap_add:
+    #   - SYS_PTRACE
+    # security_opt:
+    #   - seccomp:unconfined
+
+    # For testing, remapping port
+    command: >-
+      bash -c '
+      while sleep 1000; do :; done
+      '
+
+volumes:
+  bashhistory:
